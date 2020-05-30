@@ -2,24 +2,23 @@ import os.path
 import sys
 
 temp_dict = {}
-curentUser = ""
+# curentUser = ""
 ogr_kayit = {}
 ders_kayit = {}
 user_kayit = {}
 ders_list = []
 ders_bilgi = {}
-ogrenciDersleri = {}
 ilk = True
 
-def userMenu():
 
+def userMenu():
     global ogr_kayit
     global ders_kayit
     global ilk
     global userName
     global userPass
 
-    if ilk: #Sadece ilk başta giriş yazısının görünmesini sağladım.
+    if ilk:  # Sadece ilk başta giriş yazısının görünmesini sağladım.
         print("Online Ders otomasyonumuza hoşgeldiniz!")
         userLogin()
         ilk = False
@@ -41,8 +40,8 @@ def userMenu():
         """)
 
         secim = input("Ne yapmak istiyorsunuz?")
-        if secim.isnumeric(): #rakam kontrolü yapılır.
-            secim = int(secim) #string almasın diye int e çevirme işlemi yapılır.
+        if secim.isnumeric():  # rakam kontrolü yapılır.
+            secim = int(secim)  # string almasın diye int e çevirme işlemi yapılır.
 
             if secim == 1:
                 ders_ekle()
@@ -88,7 +87,7 @@ def ogr_ekle():
     ogr_ders = int(input("Eğitim gördüğü dersin numarasini giriniz: "))
     ogr_kayit[ogr_no] = [ogr_ad, ogr_soyad, ogr_tel, ders_list[ogr_ders]]
     print(ogr_kayit[ogr_no])
-    dosya_yaz(ogr_kayit,"ogr.txt")
+    dosya_yaz(ogr_kayit, "ogr.txt")
     userMenu()
 
 
@@ -101,7 +100,7 @@ def ders_ekle():
     userMenu()
 
 
-def arama(dosyaYolu="ogr.txt"): #veriler dosyadan okunup sözlüğe atanır
+def arama(dosyaYolu="ogr.txt"):  # veriler dosyadan okunup sözlüğe atanır
     dosya = open(dosyaYolu, "r")
     veri = dosya.read()
     temp_dict = eval(veri)
@@ -109,7 +108,7 @@ def arama(dosyaYolu="ogr.txt"): #veriler dosyadan okunup sözlüğe atanır
     # print(type(temp_dict))
     dosya.close()
     return temp_dict
-    #userMenu()
+
 
 def ogrenciArama():
     liste("ogr")
@@ -119,7 +118,7 @@ def ogrenciArama():
     1-Bir Ust Menu
     2-Ana Menu
     """)
-    sec2 =  int(input("İşlemi seciniz: "))
+    sec2 = int(input("İşlemi seciniz: "))
     if sec2 == 1:
         ogrenciArama()
     else:
@@ -136,11 +135,11 @@ def liste(ne_liste):
         ders_kayit = arama("ders.txt")
         # print(ders_kayit)
         ders_list = list(ders_kayit.keys())
-        print("**"*50)
+        print("**" * 50)
         for i in ders_list:
             print("Ders Numarası: {} Ders Adı: {} Ders Ucreti: {}".format(ders_list.index(i), i, ders_kayit[i]))
             print("--" * 50)
-        print("**"*50)
+        print("**" * 50)
 
     elif ne_liste == "ogr":
         ogr_kayit = arama("ogr.txt")
@@ -149,11 +148,14 @@ def liste(ne_liste):
         print("**" * 50)
         for i in ogr_list:
             print("Öğrenci Id: {} Öğrenci Numarası: {} Öğrenci Adı: {} Öğrenci Soyadı: {} Aldığı Ders: {}"
-                  "".format(ogr_list.index(i),ogr_list[ogr_list.index(i)],ogr_kayit[i][0],ogr_kayit[i][1],ogr_kayit[i][3]))
-            print("--"*50)
+                  "".format(ogr_list.index(i), ogr_list[ogr_list.index(i)], ogr_kayit[i][0], ogr_kayit[i][1],
+                            ogr_kayit[i][3]))
+            print("--" * 50)
+
 
 def ogr_silme():
     liste("ogr")
+
     def ogr_sil(numara):
         del ogr_kayit[int(numara)]
         ogr = ogr_kayit
@@ -174,6 +176,7 @@ def ogr_silme():
     sil = int(input("Silinmesini istediğiniz öğrencinin numarasini giriniz: "))
     ogr_sil(sil)
     userMenu()
+
 
 def ders_silme():
     liste("ders")
@@ -230,7 +233,7 @@ def guncelle():
     userMenu()
 
 
-def faturaBas(): #tum öğrenciler için fatura bilgisi hesaplama
+def faturaBas():  # tum öğrenciler için fatura bilgisi hesaplama
 
     try:
         ders_bilgi = arama("ders_bilgi.txt")
@@ -238,15 +241,17 @@ def faturaBas(): #tum öğrenciler için fatura bilgisi hesaplama
 
         for i in ders_bilgi_list:
             if ders_bilgi[i][2] > 100:
-                y_dersucret = ders_bilgi[i][2] *0.1
-                y_dersucret = ders_bilgi[i][2]-y_dersucret
+                y_dersucret = ders_bilgi[i][2] * 0.1
+                y_dersucret = ders_bilgi[i][2] - y_dersucret
                 print("Öğrenci No:", i, "Ders Adı:", ders_bilgi[i][0],
-                      "Ders Saati:", ders_bilgi[i][1], "Ders Ücreti:",ders_bilgi[i][2], "İndirimli Ders Ucreti:",y_dersucret)
+                      "Ders Saati:", ders_bilgi[i][1], "Ders Ücreti:", ders_bilgi[i][2], "İndirimli Ders Ucreti:",
+                      y_dersucret)
 
     except:
         print("Dosya okunamıyor!")
         userMenu()
     userMenu()
+
 
 def ogrenciyeDersEkle():
     liste("ogr")
@@ -254,16 +259,16 @@ def ogrenciyeDersEkle():
     print(ogr_kayit[no])
     liste("ders")
     ders = ogr_kayit[no][3]
+    print(ders)
     saatlik = ders_kayit[ders]
     ders_saat = float(input("Yapılan ders saatini giriniz: "))
-    ucret = ders_saat*saatlik
-    print(ucret) #Ogrencinin aldığı ders saatine göre toplam ders ucretini hesaplanır.
+    ucret = ders_saat * saatlik
+    print(ucret)  # Ogrencinin aldığı ders saatine göre toplam ders ucretini hesaplanır.
     ders_bilgi[no] = [ders, ders_saat, ucret]
     dosya_yaz(ders_bilgi, "ders_bilgi.txt")
-    userMenu()
 
 
-#Dosya boş mu dolu mu kontrol edilir. Boşsa varsayılan değer verilir.
+# Dosya boş mu dolu mu kontrol edilir. Boşsa varsayılan değer verilir.
 def dosya_kontrol():
     global ogr_kayit
     global ders_kayit
@@ -287,18 +292,18 @@ def dosya_kontrol():
         user_kayit = arama("users.txt")
 
     except:
-        #Dosya boşsa ya da okunamadıysa expect e girer.
-        veri = {185: ['esra', 'demir', '562', 'mat']}  #ogr.txt boş kalmasın diye veri ekledim
-        veri2 = {'mat': 124}  #ders.txt boş kalmasın diye veri ekledim
+        # Dosya boşsa ya da okunamadıysa expect e girer.
+        veri = {185: ['esra', 'demir', '562', 'mat']}  # ogr.txt boş kalmasın diye veri ekledim
+        veri2 = {'mat': 124}  # ders.txt boş kalmasın diye veri ekledim
         u_kontrol = {'Esra': '123'}
-        dosya_yaz(veri,"ogr.txt") #dosyaya verileri yazdırır
+        dosya_yaz(veri, "ogr.txt")  # dosyaya verileri yazdırır
         dosya_yaz(veri2, "ders.txt")
         dosya_yaz(u_kontrol, "users.txt")
         print("Örnek veriler eklendi!")
         userMenu()
 
-def cikis():
 
+def cikis():
     # secim = {"cikis": ["evet", "hayır"]}
     # secim.get(cikis,"Lutfen gecerli karakter giriniz!")
 
@@ -310,14 +315,14 @@ def cikis():
         print("Ana Menüye yöneltiliyorsunuz...")
         userMenu()
 
-#Kullanıcı Girişi
-def userLogin():
 
+# Kullanıcı Girişi
+def userLogin():
     print("Varsayılan; Kullanıcı Adı: Esra , Kullanıcı Parola: 123")
 
     userName = input("Kullanıcı İsmi Gir: ")
     userPass = input("Parolanızı Giriniz: ")
-    #user_data = [] #user_data listeye atandı.
+    # user_data = [] #user_data listeye atandı.
 
     try:
         if str(user_kayit[userName]) == userPass:
@@ -328,6 +333,7 @@ def userLogin():
     except:
         print("Tekrar Deneyiniz!")
         userMenu()
+
 
 #     for user in user_kayit:
 #         users_data.append(user.split())
@@ -351,7 +357,7 @@ def userLogin():
 # else:
 #     userRegister()
 
-#Varsayılan kullanıcı adı ve parola belirtildiği için register fonksiyonunu yorum satırına alındı.
+# Varsayılan kullanıcı adı ve parola belirtildiği için register fonksiyonunu yorum satırına alındı.
 # def userRegister(): #Birden fazla kullanıcı için girisi olsaydı
 #     print("\nÖzel Ders Otomasyonu kayıt ekranına hoş geldiniz!\n")
 #     print("Giriş ekranına dönmek için 'E' tuşlayınız\n")
