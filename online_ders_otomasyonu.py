@@ -40,28 +40,30 @@ def userMenu():
             *******************************************************
         """)
 
-        secim = int(input("Ne yapmak istiyorsunuz?"))
+        secim = input("Ne yapmak istiyorsunuz?")
         if secim.isnumeric():
-            if secim == 1:
-                ders_ekle()
-            elif secim == 2:
-                ders_silme()
-            elif secim == 3:
-                guncelle()
-            elif secim == 4:
-                ogr_ekle()
-            elif secim == 5:
-                ogr_silme()
-            elif secim == 6:
-                faturaBas()
-            elif secim == 7:
-                liste("ogr")
-                liste("ders")
-            elif secim == 8:
-                ogrenciyeDersEkle()
-            elif secim == 9:
-                print("Uygulamadan çıkış yapılıyor!!")
-                break
+            secim = int(secim)
+
+        if secim == 1:
+            ders_ekle()
+        elif secim == 2:
+            ders_silme()
+        elif secim == 3:
+            guncelle()
+        elif secim == 4:
+            ogr_ekle()
+        elif secim == 5:
+            ogr_silme()
+        elif secim == 6:
+            faturaBas()
+        elif secim == 7:
+            liste("ogr")
+            liste("ders")
+        elif secim == 8:
+            ogrenciyeDersEkle()
+        elif secim == 9:
+            print("Uygulamadan çıkış yapılıyor!!")
+            sys.exit()
 
 
 def dosya_oku(dosyaYolu):
